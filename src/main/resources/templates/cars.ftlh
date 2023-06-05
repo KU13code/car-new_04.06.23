@@ -5,13 +5,13 @@
 </head>
 <body>
 <h1>BuyCar</h1><hr>
-<form method="get" action="/search">
-    Поиск: <input type="text" name="search_request">
+<form method="get" action="/">
+    Поиск: <input type="text" name="search_request" value="${search_request?if_exists}">
     <button type="submit">Поиск</button>
 
 </form>
 <#list cars as car>
-    <p>${car.brand} | ${car.model} | ${car.ls} | ${car.toplivo} | ${car.price} ₽ </p>
+    <p><a href="/${car.id}"><b> ${car.brand}</b></a> | ${car.model} | ${car.ls} | ${car.toplivo} | ${car.price} ₽ </p>
 </#list>
 <hr>
 <h3>Добовление нового Авто:</h3>

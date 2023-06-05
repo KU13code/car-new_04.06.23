@@ -15,9 +15,19 @@ public class CarController {
     private final CarService carService;
 
     @GetMapping
-    public  String cars(Model model){
-        model.addAttribute("cars", carService.getAll());
+    public  String cars(@RequestParam(value = "search_request", required = false) String key, Model model){
+        if (key == null) model.addAttribute("cars", carService.getAll());
+        else {
+            model.addAttribute("search_request", key);
+            model.addAttribute("cars", carService.search(key));
+        }
         return "cars";
+    }
+
+    @GetMapping("/{id}")
+    public String carInfo(@PathVariable("id") Long id, Model model){
+        model.addAttribute(carService.getById(id));
+        return "car-info";
     }
 
     @PostMapping
@@ -26,13 +36,15 @@ public class CarController {
         return "redirect:/";
     }
 
-    @GetMapping("/search")
-    public String search(@ModelAttribute("search_request") String key, Model model){
-        List<Car> searchResult = carService.search(key);
-        model.addAttribute("search_result",searchResult);
-        return "search_result";
 
-    }
+
+//    @GetMapping("/search")
+//    public String search(@ModelAttribute("search_request") String key, Model model){
+//        List<Car> searchResult = carService.search(key);
+//        model.addAttribute("search_result",searchResult);
+//        return "search_result";
+//
+//    }
 }
 
 
