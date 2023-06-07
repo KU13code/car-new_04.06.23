@@ -15,7 +15,7 @@
 </#list>
 <hr>
 <h3>Добовление нового Авто:</h3>
-<form action="/" method="post">
+<form action="/" method="post" >
     Бренд: <input type="text" name="brand">
     <br><br>
     Модель: <input type="text" name="model">
@@ -25,6 +25,8 @@
     Топливо: <input type="text" name="toplivo">
     <br><br>
     Цена: <input type="text" name="price">
+    <br><br>
+    Фото: <input type="file" name="image">
     <br><br>
     <button type="submit">Добавить</button>
 </form>

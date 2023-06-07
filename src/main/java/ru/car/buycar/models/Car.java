@@ -27,4 +27,8 @@ public class Car {
 
     @Column(name = "price")
     private int price;
+
+    @JoinColumn(name = "image_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    private Image image;
 }

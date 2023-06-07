@@ -1,9 +1,11 @@
 package ru.car.buycar.controllers;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.car.buycar.models.Car;
 import ru.car.buycar.services.CarService;
 
@@ -30,9 +32,10 @@ public class CarController {
         return "car-info";
     }
 
+    @SneakyThrows
     @PostMapping
-    public String save(@ModelAttribute Car car){
-        carService.save(car);
+    public String save(@ModelAttribute Car car, @RequestParam("image") MultipartFile image){
+        carService.save(car, image);
         return "redirect:/";
     }
 
