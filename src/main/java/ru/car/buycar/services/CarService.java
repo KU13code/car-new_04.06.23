@@ -25,12 +25,22 @@ import java.util.zip.Inflater;
 @Slf4j
 public class CarService {
     private final CarRepository carRepository;
+    private final ImageRepository imageRepository;
     private final ImageFacade imageFacade;
 
     public List<Car> getAll(){
         log.info("Get all Car");
         return carRepository.findAll();
     }
+
+
+    public Image getImageById(Long id) {
+        Image image = imageRepository.findById(id)
+                .orElse(null);
+        image.setBytes(decompressBytes(image.getBytes()));
+        return image;
+    }
+
 
     public Car getById(Long id) {
         return carRepository.findById(id).orElse(null);
@@ -46,15 +56,15 @@ public class CarService {
     }
 
     public List<Car> search(String key) {
-       // log.info("get brand car");
-        //return carRepository.findByBrand(key);
         return searchBySerchWord(key, carRepository.findAll());
     }
 
     private List<Car> searchBySerchWord(String searchWord, List<Car> cars){
         List<Car> searchCars = new ArrayList<>();
+
         String lowerSearchWord = makeStringToLowerCase(searchWord);
         char[] searchWordToCharArray = lowerSearchWord.toCharArray();
+
         for (int a = 0; a < cars.size(); a++){
             String lowerCarsBtand = makeStringToLowerCase(cars.get(a).getBrand());
             char[] chars = lowerCarsBtand.toCharArray();
@@ -127,7 +137,4 @@ public class CarService {
         System.out.println("Compressed Image Byte Size - " + outputStream.toByteArray().length);
         return outputStream.toByteArray();
     }
-
-
-
 }

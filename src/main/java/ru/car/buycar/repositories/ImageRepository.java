@@ -5,3 +5,4 @@ import ru.car.buycar.models.Image;
 
 public interface ImageRepository extends JpaRepository<Image, Long> {
 }
+

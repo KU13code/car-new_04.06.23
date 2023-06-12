@@ -1,7 +1,5 @@
 package ru.car.buycar.controllers;
 
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,12 +7,16 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.car.buycar.models.Car;
 import ru.car.buycar.services.CarService;
 
-import java.util.List;
+import java.io.IOException;
 
 @Controller
-@RequiredArgsConstructor
 public class CarController {
     private final CarService carService;
+
+    public CarController(CarService carService) {
+        this.carService = carService;
+    }
+
 
     @GetMapping
     public  String cars(@RequestParam(value = "search_request", required = false) String key, Model model){
@@ -32,23 +34,14 @@ public class CarController {
         return "car-info";
     }
 
-    @SneakyThrows
-    @PostMapping
-    public String save(@ModelAttribute Car car, @RequestParam("image") MultipartFile image){
+
+    @PostMapping("/")
+    public String save(@RequestParam("file") MultipartFile image, Car car) throws IOException {
         carService.save(car, image);
         return "redirect:/";
     }
-
-
-
-//    @GetMapping("/search")
-//    public String search(@ModelAttribute("search_request") String key, Model model){
-//        List<Car> searchResult = carService.search(key);
-//        model.addAttribute("search_result",searchResult);
-//        return "search_result";
-//
-//    }
 }
+
 
 
 

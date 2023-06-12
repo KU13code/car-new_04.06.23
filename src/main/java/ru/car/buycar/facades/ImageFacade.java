@@ -18,3 +18,4 @@ public class ImageFacade {
         return image;
     }
 }
+
